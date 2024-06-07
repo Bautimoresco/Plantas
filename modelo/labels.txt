@@ -1,0 +1,2 @@
+0 Buen estado
+1 Mal estado
