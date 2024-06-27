@@ -49,7 +49,7 @@ st.markdown(
 
     [data-testid="stAppViewContainer"],
     [data-testid="stHeader"] {
-        background-color: white; /* Fondo blanco */
+        background-color: #f5deb3; /* Fondo blanco */
     }
     </style>
     """,
@@ -188,6 +188,8 @@ if input_img is not None:
 
 
     st.subheader("*Necesitas la ayuda de un profesional?🧑‍🔬🌱*")
+
+
     with st.expander("Mapa de Viveros Cercanos 🗺️🌿"):
         user_location = st.text_input("Ingrese su dirección para encontrar viveros cercanos:")
 
