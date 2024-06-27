@@ -195,6 +195,6 @@ with st.expander("Mapa de Viveros Cercanos 🗺️🌿"):
 
         if user_location:
             st.write(f"Ubicación ingresada: {user_location}")
-            if st.button("Buscar viveros cercanos"):
+            if st.button("Ver viveros cercanos en Google Maps"):
                 google_maps_url = f"https://www.google.com/maps/search/?api=1&query=viveros+cercanos+{user_location}"
-                webbrowser.open_new_tab(google_maps_url)
+                st.markdown(f'<a href="{google_maps_url}" target="_blank">Ver viveros cercanos en Google Maps</a>', unsafe_allow_html=True)
