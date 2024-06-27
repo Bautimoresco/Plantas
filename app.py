@@ -187,14 +187,14 @@ if input_img is not None:
                     st.markdown(rec)
 
 
-    st.subheader("*Necesitas la ayuda de un profesional?🧑‍🔬🌱*")
+st.subheader("*Necesitas la ayuda de un profesional?🧑‍🔬🌱*")
 
 
-    with st.expander("Mapa de Viveros Cercanos 🗺️🌿"):
-        user_location = st.text_input("Ingrese su dirección para encontrar viveros cercanos:")
+with st.expander("Mapa de Viveros Cercanos 🗺️🌿"):
+        user_location = st.text_input("*Ingrese su dirección para encontrar viveros cercanos:*")
 
         if user_location:
             st.write(f"Ubicación ingresada: {user_location}")
-            if st.button("Ver viveros cercanos en Google Maps"):
+            if st.button("Buscar viveros cercanos"):
                 google_maps_url = f"https://www.google.com/maps/search/?api=1&query=viveros+cercanos+{user_location}"
                 webbrowser.open_new_tab(google_maps_url)
