@@ -77,124 +77,200 @@ def classify_plant(img):
     return class_name, confidence_score
 
 
+
+# Página de navegación
+page = st.sidebar.selectbox("Seleccione una página", ["Principal", "Viveros Asociados"])
+
+
+if page == "Principal":
+
 # Streamlit App layout
-col1, col2, col3 = st.columns(3)
+    col1, col2, col3 = st.columns(3)
 
-with col2:
-    st.image("logo.png", width=350)
+    with col2:
+        st.image("logo.png", width=350)
 
-col1, col2 = st.columns(2)
-with col1:
-    st.subheader("*Acerca de la app*")
-    st.markdown(
-        """
-        <div class="info-box1">
-        <b>🌿 Identificación precisa</b>: plantIA es una aplicación diseñada para ayudarte a identificar el estado de salud de tus plantas y proporcionarte consejos útiles para su cuidado.
+    col1, col2 = st.columns(2)
+    with col1:
+        st.subheader("*Acerca de la app*")
+        st.markdown(
+            """
+            <div class="info-box1">
+            <b>🌿 Identificación precisa</b>: plantIA es una aplicación diseñada para ayudarte a identificar el estado de salud de tus plantas y proporcionarte consejos útiles para su cuidado.
+            
+            <br><b>🤖 Tecnología avanzada</b>: Utilizando inteligencia artificial y aprendizaje automático, plantIA puede analizar imágenes de plantas y ofrecer diagnósticos precisos junto con recomendaciones de expertos.
+            
+            <br><b>📍 Encuentra viveros</b>: plantIA te permite encontrar viveros cercanos para adquirir todo lo necesario para el cuidado de tus plantas.
+            
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with col2:
+        st.subheader("*Beneficios*")
+        st.markdown(
+            """
+            <div class="info-box">
+            <b>🌟 Diagnósticos Precisos</b>: La IA ofrece resultados precisos y confiables.
         
-        <br><b>🤖 Tecnología avanzada</b>: Utilizando inteligencia artificial y aprendizaje automático, plantIA puede analizar imágenes de plantas y ofrecer diagnósticos precisos junto con recomendaciones de expertos.
-        
-        <br><b>📍 Encuentra viveros</b>: plantIA te permite encontrar viveros cercanos para adquirir todo lo necesario para el cuidado de tus plantas.
-        
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+            <br><b>📸 Fácil de Usar</b>: Cargá una foto y obtené resultados en cuestión de segundos.
+            
+            <br><b>💡 Consejos para vos</b>: Recibí recomendaciones específicas para el cuidado de tus plantas.
 
-with col2:
-    st.subheader("*Beneficios*")
-    st.markdown(
-        """
-        <div class="info-box">
-        <b>🌟 Diagnósticos Precisos</b>: La IA ofrece resultados precisos y confiables.
-       
-       <br><b>📸 Fácil de Usar</b>: Cargá una foto y obtené resultados en cuestión de segundos.
-        
-        <br><b>💡 Consejos para vos</b>: Recibí recomendaciones específicas para el cuidado de tus plantas.
+            <br><b>🧑‍🔬 Ayuda profesional</b>: Alianzas con una gran cantidad de viveros, para brindarte el mejor asesoramiento.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-         <br><b>🧑‍🔬 Ayuda profesional</b>: Alianzas con una gran cantidad de viveros, para brindarte el mejor asesoramiento.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+    col1, col2, col3 = st.columns(3)
 
-col1, col2, col3 = st.columns(3)
+    with col2:
+        st.subheader("*¿Cómo Funciona?*")
+        st.markdown(
+            """
+            <div class="info-box1">
+            <b>📸 Paso 1</b>: Cargá una foto de una hoja de tu planta.
 
-with col2:
-    st.subheader("*¿Cómo Funciona?*")
-    st.markdown(
-        """
-        <div class="info-box1">
-        <b>📸 Paso 1</b>: Cargá una foto de una hoja de tu planta.
+            <br><b>🤖 Paso 2</b>: La IA analiza la imagen.
 
-        <br><b>🤖 Paso 2</b>: La IA analiza la imagen.
+            <br><b>📊 Paso 3</b>: Vas a recibir un diagnóstico del estado de tu planta.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+    st.subheader("*Cargá la foto🌿*")
 
-        <br><b>📊 Paso 3</b>: Vas a recibir un diagnóstico del estado de tu planta.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
 
-st.subheader("*Cargá la foto🌿*")
+    def image_carousel(images):
+        if 'carousel_index' not in st.session_state:
+            st.session_state['carousel_index'] = 0
 
-input_img = st.file_uploader("Sube una imagen de una hoja de tu planta", type=["jpg", "jpeg", "png"])
+        # Center the carousel
+        col1, col2, col3 = st.columns([1, 2, 1])
 
-# Recomendaciones para plantas en buen estado
-good_recommendations = [
-    "*🌿 Proporciona luz adecuada y riego regular según las necesidades de tu planta.*",
-    "*🌞 Asegúrate de que tu planta reciba suficiente luz solar diariamente.*",
-    "*💧 Mantén el nivel de humedad apropiado en la tierra para el tipo de planta que tienes.*",
-    "*🌱 Fertiliza tu planta de manera regular para mantenerla saludable y en crecimiento.*",
-    "*🌸 Revisa regularmente si hay signos de plagas o enfermedades en tu planta.*"
-]
-
-# Recomendaciones para plantas en mal estado
-bad_recommendations = [
-    "*⚠️ Proporciona más agua y asegúrate de que reciba suficiente luz solar.*",
-    "*🔍 Revisa si hay plagas y trátalas adecuadamente.*",
-    "*💡 Asegúrate de que tu planta reciba al menos 6 horas de luz al día.*",
-    "*🌾 Comprueba si la tierra está demasiado seca o demasiado húmeda.*",
-    "*🛠️ Podar las hojas dañadas puede ayudar a la planta a recuperarse.*"
-]
-
-# Dentro del bloque if input_img is not None:
-if input_img is not None:
-    if st.button("Determinar estado de la planta"):
-        col1, col2, col3 = st.columns([1, 1, 1])
-        
         with col1:
-            st.info("Imagen cargada")
-            st.image(input_img, use_column_width=True)
-        
+            st.button("⬅️", key="prev", on_click=lambda: st.session_state.update(carousel_index=(st.session_state['carousel_index'] - 1) % len(images)))
+
         with col2:
-            st.info("Resultado")
-            image_file = Image.open(input_img)
-            with st.spinner('Analizando imagen...'):
-                label, confidence_score = classify_plant(image_file)
-                label_description = label.split(maxsplit=1)[1] if len(label.split()) > 1 else label
-                
-                if confidence_score < 0.80:
-                    st.warning(f"La confianza en el resultado es baja ({confidence_score * 100:.2f}%). Por favor, intenta con otra foto.")
-                else:
-                    st.success(f"{label_description} (Confianza: {confidence_score * 100:.2f}%)")
+            st.image(images[st.session_state['carousel_index']], width=300, caption="Ejemplo de imagen")
 
         with col3:
-            st.info("Recomendaciones")
-            if label_description.strip().lower() == "mal estado":
-                for rec in bad_recommendations:
-                    st.markdown(rec)
-            else:
-                for rec in good_recommendations:
-                    st.markdown(rec)
+            st.button("➡️", key="next", on_click=lambda: st.session_state.update(carousel_index=(st.session_state['carousel_index'] + 1) % len(images)))
 
 
-st.subheader("*Necesitas la ayuda de un profesional?🧑‍🔬🌱*")
+
+    example_images = [
+        "hoja0.jpg",
+        "hoja1.jpg",
+        "hoja2.jpeg"
+    ]
 
 
-with st.expander("Mapa de Viveros Cercanos 🗺️🌿"):
-        user_location = st.text_input("*Ingrese su dirección para encontrar viveros cercanos:*")
+    st.markdown("Ejemplos de imágenes:")
+    image_carousel(example_images)
 
-        if user_location:
-            st.write(f"Ubicación ingresada: {user_location}")
-            if st.button("Ver viveros cercanos en Google Maps"):
-                google_maps_url = f"https://www.google.com/maps/search/?api=1&query=viveros+cercanos+{user_location}"
-                st.markdown(f'<a href="{google_maps_url}" target="_blank">Ver viveros cercanos en Google Maps</a>', unsafe_allow_html=True)
+    input_img = st.file_uploader("Sube una imagen de una hoja de tu planta", type=["jpg", "jpeg", "png"])
+
+    # Recomendaciones para plantas en buen estado
+    good_recommendations = [
+        "*🌿 Proporciona luz adecuada y riego regular según las necesidades de tu planta.*",
+        "*🌞 Asegúrate de que tu planta reciba suficiente luz solar diariamente.*",
+        "*💧 Mantén el nivel de humedad apropiado en la tierra para el tipo de planta que tienes.*",
+        "*🌱 Fertiliza tu planta de manera regular para mantenerla saludable y en crecimiento.*",
+        "*🌸 Revisa regularmente si hay signos de plagas o enfermedades en tu planta.*"
+    ]
+
+    # Recomendaciones para plantas en mal estado
+    bad_recommendations = [
+        "*⚠️ Proporciona más agua y asegúrate de que reciba suficiente luz solar.*",
+        "*🔍 Revisa si hay plagas y trátalas adecuadamente.*",
+        "*💡 Asegúrate de que tu planta reciba al menos 6 horas de luz al día.*",
+        "*🌾 Comprueba si la tierra está demasiado seca o demasiado húmeda.*",
+        "*🛠️ Podar las hojas dañadas puede ayudar a la planta a recuperarse.*"
+    ]
+
+    # Dentro del bloque if input_img is not None:
+    if input_img is not None:
+        if st.button("Determinar estado de la planta"):
+            col1, col2, col3 = st.columns([1, 1, 1])
+            
+            with col1:
+                st.info("Imagen cargada")
+                st.image(input_img, use_column_width=True)
+            
+            with col2:
+                st.info("Resultado")
+                image_file = Image.open(input_img)
+                with st.spinner('Analizando imagen...'):
+                    label, confidence_score = classify_plant(image_file)
+                    label_description = label.split(maxsplit=1)[1] if len(label.split()) > 1 else label
+                    
+                    if confidence_score < 0.80:
+                        st.warning(f"La confianza en el resultado es baja ({confidence_score * 100:.2f}%). Por favor, intenta con otra foto.")
+                    else:
+                        st.success(f"{label_description} (Confianza: {confidence_score * 100:.2f}%)")
+
+            with col3:
+                st.info("Recomendaciones")
+                if label_description.strip().lower() == "mal estado":
+                    for rec in bad_recommendations:
+                        st.markdown(rec)
+                else:
+                    for rec in good_recommendations:
+                        st.markdown(rec)
+
+
+    st.subheader("*Necesitas la ayuda de un profesional?🧑‍🔬🌱*")
+
+
+    with st.expander("Mapa de Viveros Cercanos 🗺️🌿"):
+            user_location = st.text_input("*Ingrese su dirección para encontrar viveros cercanos:*")
+
+            if user_location:
+                st.write(f"Ubicación ingresada: {user_location}")
+                if st.button("Ver viveros cercanos en Google Maps"):
+                    google_maps_url = f"https://www.google.com/maps/search/?api=1&query=viveros+cercanos+{user_location}"
+                    st.markdown(f'<a href="{google_maps_url}" target="_blank">Ver viveros cercanos en Google Maps</a>', unsafe_allow_html=True)
+
+if page == "Viveros Asociados":
+    st.title("🌿 Viveros Asociados 🌿")
+    st.markdown("### 🌟 ¡Con el código **PlantIA** podes obtener hasta un 15% de descuento! 🌟")
+
+    nurseries = [
+        {
+            "name": "Vivero Sawatani",
+            "location": "Av. Siempre Viva 123, Springfield",
+            "image": "vivero1.jpeg",
+            "link": "https://www.viverosawatani.com/"
+        },
+        {
+            "name": "Jardines del Sol",
+            "location": "Calle Falsa 456, Shelbyville",
+            "image": "vivero2.jpeg",
+            "link": "https://example.com/jardines-del-sol"
+        },
+        {
+            "name": "Plantas y Flores",
+            "location": "Boulevard Verde 789, Capital City",
+            "image": "vivero3.jpeg",
+            "link": "https://example.com/plantas-y-flores"
+        },
+        {
+            "name": "EcoJardín",
+            "location": "Ruta Ecológica 101, Ogdenville",
+            "image": "vivero4.jpeg",
+            "link": "https://example.com/ecojardin"
+        }
+    ]
+
+    # Mostrar viveros en un diseño de cuadrícula
+    for i, nursery in enumerate(nurseries):
+        if i % 2 == 0:
+            cols = st.columns(2)
+        with cols[i % 2]:
+            st.image(nursery["image"], width=300)
+            st.markdown(f"**{nursery['name']}**")
+            st.markdown(f"**📍 Ubicación:** {nursery['location']}")
+            st.markdown(f"[Visitar sitio web 🌐]({nursery['link']})")
